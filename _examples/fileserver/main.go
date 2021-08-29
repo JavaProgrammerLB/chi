@@ -31,18 +31,26 @@ import (
 )
 
 func main() {
+	// (1) chi.NewRouter()
 	r := chi.NewRouter()
+
+	// Mux里的Use函数
 	r.Use(middleware.Logger)
 
 	// Index handler
+	// Get函数
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		//ResponseWriter的Write函数，[]byte("hi")
 		w.Write([]byte("hi"))
 	})
 
 	// Create a route along /files that will serve contents from
 	// the ./data/ folder.
+	// os包里的Getwd()函数
 	workDir, _ := os.Getwd()
+	// http包里的Dir()函数
 	filesDir := http.Dir(filepath.Join(workDir, "data"))
+	// 调用本地的FileServer函数
 	FileServer(r, "/files", filesDir)
 
 	http.ListenAndServe(":3333", r)

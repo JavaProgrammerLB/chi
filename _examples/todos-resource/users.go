@@ -6,13 +6,18 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// 结构体userResource
 type usersResource struct{}
 
 // Routes creates a REST router for the todos resource
+// 结构体的Routes函数
 func (rs usersResource) Routes() chi.Router {
+
+	// 第一步
 	r := chi.NewRouter()
 	// r.Use() // some middleware..
 
+	// 第三步
 	r.Get("/", rs.List)    // GET /users - read a list of users
 	r.Post("/", rs.Create) // POST /users - create a new user and persist it
 	r.Put("/", rs.Delete)
@@ -27,6 +32,7 @@ func (rs usersResource) Routes() chi.Router {
 	return r
 }
 
+// 函数
 func (rs usersResource) List(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("users list of stuff.."))
 }

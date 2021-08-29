@@ -16,6 +16,7 @@ import (
 
 func main() {
 	// The HTTP Server
+	// (1) &http.Server, Handler
 	server := &http.Server{Addr: "0.0.0.0:3333", Handler: service()}
 
 	// Server run context

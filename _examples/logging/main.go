@@ -26,18 +26,25 @@ func main() {
 	// Setup the logger backend using sirupsen/logrus and configure
 	// it to use a custom JSONFormatter. See the logrus docs for how to
 	// configure the backend at github.com/sirupsen/logrus
+	// 看上去是日志
 	logger := logrus.New()
+
+	// JSONFormatter
 	logger.Formatter = &logrus.JSONFormatter{
 		// disable, as we set our own
 		DisableTimestamp: true,
 	}
 
 	// Routes
+	// 第一步
 	r := chi.NewRouter()
+
+	// 第二步
 	r.Use(middleware.RequestID)
 	r.Use(NewStructuredLogger(logger))
 	r.Use(middleware.Recoverer)
 
+	// 第三步
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("welcome"))
 	})
@@ -49,6 +56,8 @@ func main() {
 	r.Get("/panic", func(w http.ResponseWriter, r *http.Request) {
 		panic("oops")
 	})
+
+	// 第四步
 	http.ListenAndServe(":3333", r)
 }
 

@@ -16,19 +16,25 @@ import (
 )
 
 func main() {
+
+	// 第一步
 	r := chi.NewRouter()
 
+	// 第二步
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
+	// 第三步
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("."))
 	})
 
+	// Mount函数
 	r.Mount("/users", usersResource{}.Routes())
 	r.Mount("/todos", todosResource{}.Routes())
 
+	// 第四步
 	http.ListenAndServe(":3333", r)
 }

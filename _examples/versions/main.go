@@ -24,8 +24,10 @@ import (
 )
 
 func main() {
+	// 第一步
 	r := chi.NewRouter()
 
+	// 第二步
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
@@ -49,6 +51,7 @@ func main() {
 		r.Mount("/articles", articleRouter())
 	})
 
+	// 第四步
 	http.ListenAndServe(":3333", r)
 }
 

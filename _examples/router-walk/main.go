@@ -9,7 +9,10 @@ import (
 )
 
 func main() {
+	// 第一步
 	r := chi.NewRouter()
+
+	// 第三步
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("root."))
 	})
@@ -31,6 +34,7 @@ func main() {
 		return nil
 	}
 
+	// chi包里的Walk函数
 	if err := chi.Walk(r, walkFunc); err != nil {
 		fmt.Printf("Logging err: %s\n", err.Error())
 	}

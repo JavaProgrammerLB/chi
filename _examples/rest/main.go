@@ -44,6 +44,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"github.com/go-chi/chi"
 	"math/rand"
 	"net/http"
 	"strings"
@@ -57,16 +58,20 @@ import (
 var routes = flag.Bool("routes", false, "Generate router documentation")
 
 func main() {
+	// flag包里的Parse函数
 	flag.Parse()
 
+	// 第一步
 	r := chi.NewRouter()
 
+	// 第二步
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.URLFormat)
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 
+	// 第三步
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("root."))
 	})
